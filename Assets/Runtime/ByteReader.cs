@@ -8,10 +8,8 @@ public static class ByteReader {
     public static T Read<T>(Memory<byte> src, ref int offset) where T : struct {
 
         var span = src.Span.Slice(offset);
-        MemoryMarshal.TryRead<T>(span, out T result);
-        for (byte i = 0; i < Marshal.SizeOf<T>(); i++) {
-            offset += 1;
-        }
+        var result = MemoryMarshal.Cast<byte, T>(span)[0];
+        offset += Marshal.SizeOf<T>();
         return result;
 
     }

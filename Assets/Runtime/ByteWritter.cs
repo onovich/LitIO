@@ -8,9 +8,7 @@ public static class ByteWritter {
 
         var span = dst.Span.Slice(offset);
         MemoryMarshal.TryWrite<T>(span, ref src);
-        for (byte i = 0; i < Marshal.SizeOf<T>(); i++) {
-            offset += 1;
-        }
+        offset += Marshal.SizeOf<T>();
 
     }
 
