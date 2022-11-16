@@ -17,6 +17,7 @@ public class Sample : MonoBehaviour {
         ByteWritter.Write(dst, 1.5f, ref offset);
         ByteWritter.Write(dst, 1.5, ref offset);
         ByteWritter.WriteString(dst, "Hello World!", ref offset);
+        //ByteWritter.WriteArray(dst, new int[] { 1, 2, 3, 4, 5 }, ref offset);
 
         offset = 0;
         var a = ByteReader.Read<int>(dst, ref offset);
@@ -27,8 +28,11 @@ public class Sample : MonoBehaviour {
         var f = ByteReader.Read<float>(dst, ref offset);
         var g = ByteReader.Read<double>(dst, ref offset);
         var h = ByteReader.ReadString(dst, ref offset);
+        //var i = ByteReader.ReadArray<int>(dst, ref offset);
 
         Debug.Log("a=" + a + ";b=" + b + ";c=" + c + ";d=" + d + ";e=" + e + ";f=" + f + ";g=" + g + ";h=" + h);
+        //Debug.Log("i.length="+i.Length);
+        //Debug.Log("i="+i[0]+";"+i[1]+";"+i[2]+";"+i[3]+";"+i[4]);
 
     }
 }
