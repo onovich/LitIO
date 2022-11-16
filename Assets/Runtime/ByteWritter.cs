@@ -6,7 +6,7 @@ public static class ByteWritter {
 
     public static void Write<T>(Memory<byte> dst, T src, ref int offset) where T : struct {
 
-        var span = dst.Span.Slice(offset);
+        var span = dst.Span.Slice(offset, Marshal.SizeOf<T>());
         MemoryMarshal.TryWrite<T>(span, ref src);
         offset += Marshal.SizeOf<T>();
 
@@ -15,9 +15,8 @@ public static class ByteWritter {
     public static void WriteArray<T>(Memory<byte> dst, T[] src, ref int offset) where T : struct {
 
         Write<byte>(dst, (byte)src.Length, ref offset);
-        Debug.Log("write array length=" + src.Length);
 
-        var span = dst.Span.Slice(offset);
+        var span = dst.Span.Slice(offset, src.Length * Marshal.SizeOf<T>());
         var length = src.Length;
         for (int i = 0; i < length; i++) {
             Write<T>(dst, src[i], ref offset);
@@ -35,7 +34,6 @@ public static class ByteWritter {
         for (int i = 0; i < length; i++) {
             Write<byte>(dst, array[i], ref offset);
         }
-        offset += length;
 
     }
 
