@@ -38,6 +38,16 @@ namespace MortiseFrame.LitIO.Sample {
             Debug.Log("i.length=" + i.Length);
             Debug.Log("i=" + i[0] + ";" + i[1] + ";" + i[2] + ";" + i[3] + ";" + i[4]);
 
+            var countInt = ByteCounter.Count<int>();
+            var countByte = ByteCounter.Count<byte>();
+            var countUShort = ByteCounter.Count<ushort>();
+            var countString = ByteCounter.CountUTF8String("Hello World!");
+            var countString2 = ByteCounter.CountUTF8String("Hello World! 你好世界！");
+            var countIntArray = ByteCounter.CountArray(new int[] { 1, 2, 3, 4, 5 });
+            var countStringArray = ByteCounter.CountUTF8StringArray(new string[] { "Hello", "World", "!" });
+
+            Debug.Log("countInt=" + countInt + ";countByte=" + countByte + ";countUShort=" + countUShort + ";countString=" + countString + ";countString2=" + countString2 + ";countIntArray=" + countIntArray + ";countStringArray=" + countStringArray);
+
         }
     }
 }
