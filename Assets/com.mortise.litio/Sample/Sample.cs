@@ -11,16 +11,16 @@ namespace MortiseFrame.LitIO.Sample {
             byte[] dst = new byte[1024];
 
             int offset = 0;
-            ByteWritter.Write(dst, -369, ref offset);
-            ByteWritter.Write(dst, 5, ref offset);
-            ByteWritter.Write(dst, 17829, ref offset);
-            ByteWritter.Write(dst, 17829, ref offset);
-            ByteWritter.Write(dst, true, ref offset);
-            ByteWritter.Write(dst, 1.5f, ref offset);
-            ByteWritter.Write(dst, 1.5, ref offset);
-            ByteWritter.WriteString(dst, "Hello World!", ref offset);
-            ByteWritter.Write(dst, 5, ref offset);
-            ByteWritter.WriteArray(dst, new int[] { 1, 2, 3, 4, 5 }, ref offset);
+            ByteWriter.Write(dst, -369, ref offset);
+            ByteWriter.Write(dst, 5, ref offset);
+            ByteWriter.Write(dst, 17829, ref offset);
+            ByteWriter.Write(dst, 17829, ref offset);
+            ByteWriter.Write(dst, true, ref offset);
+            ByteWriter.Write(dst, 1.5f, ref offset);
+            ByteWriter.Write(dst, 1.5, ref offset);
+            ByteWriter.WriteUTF8String(dst, "Hello World!", ref offset);
+            ByteWriter.Write(dst, 5, ref offset);
+            ByteWriter.WriteArray(dst, new int[] { 1, 2, 3, 4, 5 }, ref offset);
 
             offset = 0;
             var a = ByteReader.Read<int>(dst, ref offset);
@@ -30,7 +30,7 @@ namespace MortiseFrame.LitIO.Sample {
             var e = ByteReader.Read<bool>(dst, ref offset);
             var f = ByteReader.Read<float>(dst, ref offset);
             var g = ByteReader.Read<double>(dst, ref offset);
-            var h = ByteReader.ReadString(dst, ref offset);
+            var h = ByteReader.ReadUTF8String(dst, ref offset);
             var j = ByteReader.Read<int>(dst, ref offset);
             var i = ByteReader.ReadArray<int>(dst, ref offset);
 
