@@ -6,8 +6,8 @@ LitIO is a serialization/deserialization tool developed in C#, designed to be li
 The ByteWriter.Write\<T\> and ByteReader.Read\<T\> methods can be used with any value type data structures.<br/>
 **ByteWriter.Write\<T\> 和 ByteReader.Read\<T\> 方法可以用于任意值类型数据结构。**
 
-Reading and writing arrays and strings will occupy an int as an information header to store length information.<br/>
-**数组和字符串的读写会自动占用一个 int 作为信息头储存长度信息。**
+Reading and writing arrays and strings will occupy an ushort as an information header to store length information.<br/>
+**数组和字符串的读写会自动占用一个 ushort 作为信息头储存长度信息。**
 
 If manual calculation of data length is needed, the ByteCounter interface can be used.<br/>
 **如果需要手动计算数据长度，可以使用 ByteCounter 接口。**
