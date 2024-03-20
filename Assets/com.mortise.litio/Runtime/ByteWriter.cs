@@ -7,7 +7,11 @@ namespace MortiseFrame.LitIO {
         public static void Write<T>(Memory<byte> dst, T src, ref int offset) where T : struct {
 
             Span<byte> span = dst.Span.Slice(offset, Marshal.SizeOf<T>());
-            MemoryMarshal.TryWrite<T>(span, ref src);
+            try {
+                MemoryMarshal.TryWrite<T>(span, ref src);
+            } catch (Exception e) {
+                throw new Exception($"Failed to write {typeof(T).Name} to memory at offset {offset}", e);
+            }
             offset += Marshal.SizeOf<T>();
 
         }
