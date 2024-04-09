@@ -12,6 +12,10 @@ Reading and writing arrays and strings will occupy an ushort as an information h
 If manual calculation of data length is needed, the ByteCounter interface can be used.<br/>
 **如果需要手动计算数据长度，可以使用 ByteCounter 接口。**
 
+# Readiness
+Stable and available.<br/>
+**稳定可用。**
+
 # Examples
 ```
 // Serialization
