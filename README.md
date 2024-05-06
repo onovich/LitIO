@@ -51,5 +51,7 @@ public void FromBytes(byte[] src, ref int offset) {
 # Project Example
 [Rill](https://github.com/onovich/Rill) A Lightweight Networking Library Based On Socket And TCP.
 
+[Capsule](https://github.com/onovich/Capsule) A Lightweight Local Save Library.
+
 # UPM URL
 ssh://git@github.com/onovich/LitIO.git?path=/Assets/com.mortise.litio#main
