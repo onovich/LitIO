@@ -19,15 +19,14 @@ namespace MortiseFrame.LitIO {
 
         public static T[] ReadArray<T>(ReadOnlyMemory<byte> src, ref int offset) where T : struct {
 
-            ushort length = Read<ushort>(src, ref offset);
-            ReadOnlySpan<byte> span = src.Span.Slice(offset, length * Marshal.SizeOf<T>());
+            var length = Read<byte>(src, ref offset);
+            int size = length * Marshal.SizeOf<T>();
 
-            var result = new T[length];
-            for (int i = 0; i < length; i += 1) {
-                result[i] = Read<T>(src, ref offset);
-            }
+            ReadOnlySpan<byte> span = src.Span.Slice(offset, size);
+            var result = MemoryMarshal.Cast<byte, T>(span).ToArray();
+
+            offset += size;
             return result;
-
         }
 
         public static string ReadUTF8String(byte[] src, ref int offset) {
