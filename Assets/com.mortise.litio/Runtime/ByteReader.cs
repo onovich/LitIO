@@ -17,15 +17,21 @@ namespace MortiseFrame.LitIO {
 
         }
 
-        public static T[] ReadArray<T>(ReadOnlyMemory<byte> src, ref int offset) where T : struct {
+         public static T[] ReadArray<T>(ReadOnlyMemory<byte> src, ref int offset) where T : struct {
+            int length = Read<int>(src, ref offset);
 
-            var length = Read<byte>(src, ref offset);
-            int size = length * Marshal.SizeOf<T>();
+            int elementSize = (int)Marshal.SizeOf<T>();
+            int requiredSize = (int)(length * elementSize);
+            if (offset + requiredSize > src.Length) {
+                throw new ArgumentOutOfRangeException(
+                    $"需要读取 {length} 个 {typeof(T).Name} (共 {requiredSize} 字节)，" +
+                    $"但缓冲区只剩 {src.Length - offset} 字节");
+            }
 
-            ReadOnlySpan<byte> span = src.Span.Slice(offset, size);
-            var result = MemoryMarshal.Cast<byte, T>(span).ToArray();
-
-            offset += size;
+            var result = new T[length];
+            for (int i = 0; i < length; i++) {
+                result[i] = Read<T>(src, ref offset);
+            }
             return result;
         }
 

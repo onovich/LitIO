@@ -16,17 +16,20 @@ namespace MortiseFrame.LitIO {
 
         }
 
-        public static void WriteArray<T>(Memory<byte> dst, T[] src, ref int offset) where T : struct {
-
-            Write<ushort>(dst, (ushort)src.Length, ref offset);
-
-            Span<byte> span = dst.Span.Slice(offset, src.Length * Marshal.SizeOf<T>());
-            ushort length = (ushort)src.Length;
-
-            for (int i = 0; i < length; i++) {
-                Write<T>(dst, src[i], ref offset);
+         public static void WriteArray<T>(Memory<byte> dst, T[] src, ref int offset) where T : struct {
+            int elementSize = (int)Marshal.SizeOf<T>();
+            int requiredSize = (int)(sizeof(int) + (src.Length * elementSize));
+            if (offset + requiredSize > dst.Length) {
+                throw new ArgumentOutOfRangeException(
+                    $"需要写入 {src.Length} 个 {typeof(T).Name} (共 {requiredSize} 字节)，" +
+                    $"但缓冲区只剩 {dst.Length - offset} 字节");
             }
 
+            Write<int>(dst, (int)src.Length, ref offset);
+
+            for (int i = 0; i < src.Length; i++) {
+                Write<T>(dst, src[i], ref offset);
+            }
         }
 
         public static void WriteUTF8String(byte[] dst, string src, ref int offset) {
